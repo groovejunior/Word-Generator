@@ -66,13 +66,6 @@ export default function Trainer() {
   const busyRef = useRef(false);
   const startedAtRef = useRef(0);
   const activeDrawRef = useRef<Draw | null>(null);
-  const modeRef = useRef(mode);
-  const tiersRef = useRef(tiers);
-  const durationRef = useRef(durationMs);
-
-  modeRef.current = mode;
-  tiersRef.current = tiers;
-  durationRef.current = durationMs;
 
   const redraw = useCallback((nextMode: Mode, nextTiers: Tier[]) => {
     if (!pickerRef.current) pickerRef.current = createPicker();
@@ -116,9 +109,9 @@ export default function Trainer() {
       recordRep(Math.round(spokenMs / 1000));
     }
 
-    redraw(modeRef.current, tiersRef.current);
+    redraw(mode, tiers);
     busyRef.current = false;
-  }, [recordRep, recorder, redraw]);
+  }, [mode, recordRep, recorder, redraw, tiers]);
 
   const startSpeaking = useCallback(async () => {
     if (speakingRef.current || busyRef.current || !draw) return;
@@ -130,10 +123,10 @@ export default function Trainer() {
     speakingRef.current = true;
     startedAtRef.current = Date.now();
     setSpeaking(true);
-    setDeadline(Date.now() + durationRef.current);
+    setDeadline(Date.now() + durationMs);
     document.body.dataset.speaking = "true";
     busyRef.current = false;
-  }, [draw, recorder]);
+  }, [draw, durationMs, recorder]);
 
   const toggleSpeaking = useCallback(() => {
     if (speakingRef.current) {
