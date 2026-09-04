@@ -38,6 +38,10 @@
   body[data-speaking="true"] {
     background-color: var(--color-ink);
     color: var(--color-ivory);
+    --color-ink-soft: #e3dacc;
+    --color-cloud: #b0aea5;
+    --color-cloud-dark: #b0aea5;
+    --color-oat: #3d3d3a;
   }
 
   /* Space is the app's primary control, so it must never scroll the page. */
